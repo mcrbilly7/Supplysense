@@ -1,0 +1,262 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  AGENCY
+  SUPPLIER
+  ADMIN
+}
+
+enum PlanName {
+  FREE
+  STARTER
+  PRO
+  AGENCY
+}
+
+enum SupplierPlatform {
+  ALIEXPRESS
+  ALIBABA
+  CJ_DROPSHIPPING
+  TAOBAO
+  _1688
+  OTHER
+}
+
+enum RiskLabel {
+  EXCELLENT
+  GOOD
+  OKAY
+  RISKY
+  AVOID
+}
+
+model User {
+  id            String       @id @default(cuid())
+  email         String       @unique
+  passwordHash  String
+  name          String?
+  role          UserRole     @default(USER)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  // For agencies: they can own many clients/stores
+  stores        Store[]
+  subscriptions Subscription[]
+  scans         Scan[]
+  notifications Notification[]
+  aiToolUsages  AiToolUsage[]
+  supplierProfile Supplier?  @relation("SupplierOwner", fields: [supplierProfileId], references: [id])
+  supplierProfileId String? 
+
+  // Shopify shops they own (through OAuth)
+  shopifyShops  ShopifyShop[]
+}
+
+model Supplier {
+  id             String             @id @default(cuid())
+  name           String
+  platform       SupplierPlatform
+  platformUrl    String             @unique
+  country        String?
+  city           String?
+  warehouseRegions String[]         @default([]) // e.g. ["CN", "US", "EU"]
+  sellerSince    DateTime?
+  isVerified     Boolean            @default(false)
+  verifiedBadgePaidUntil DateTime?
+
+  // Aggregate metrics (latest snapshot)
+  overallTrustScore Float          @default(0)
+  shippingScore     Float          @default(0)
+  qualityScore      Float          @default(0)
+  communicationScore Float         @default(0)
+  stabilityScore    Float          @default(0)
+  riskLabel         RiskLabel      @default(OKAY)
+
+  metricsHistory   SupplierMetrics[]
+  scans            Scan[]
+  products         SupplierProduct[]
+  owner            User?           @relation("SupplierOwner", references: [id])
+
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+}
+
+model SupplierMetrics {
+  id                String   @id @default(cuid())
+  supplier          Supplier @relation(fields: [supplierId], references: [id])
+  supplierId        String
+
+  timeRangeStart    DateTime
+  timeRangeEnd      DateTime
+
+  avgShippingDaysUS Float?
+  avgShippingDaysEU Float?
+  onTimeDeliveryRate Float?    // 0..1
+  orderVolume       Int?
+  refundRate        Float?     // 0..1
+  disputeRate       Float?     // 0..1
+  defectRate        Float?     // 0..1
+  reviewAuthenticityScore Float? // 0..1
+  negativeReviewRatio Float?  // 0..1
+  responseTimeHours Float?
+  cancelRate        Float?    // 0..1
+  outOfStockFrequency Float?
+  priceVolatilityScore Float? // 0..1 (higher = more volatile)
+  trendScore        Float?    // -1..1 change over time
+
+  overallTrustScore Float      // snapshot final score at this time
+  shippingScore     Float
+  qualityScore      Float
+  communicationScore Float
+  stabilityScore    Float
+  riskLabel         RiskLabel
+
+  createdAt         DateTime   @default(now())
+}
+
+model SupplierProduct {
+  id           String   @id @default(cuid())
+  supplier     Supplier @relation(fields: [supplierId], references: [id])
+  supplierId   String
+
+  platformProductId String?
+  name         String
+  category     String?
+  imageUrl     String?
+  productUrl   String
+  createdAt    DateTime @default(now())
+}
+
+model Store {
+  id          String   @id @default(cuid())
+  owner       User     @relation(fields: [ownerId], references: [id])
+  ownerId     String
+
+  name        String
+  platform    String   // "SHOPIFY" for now
+  domain      String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  products    StoreProduct[]
+}
+
+model StoreProduct {
+  id             String   @id @default(cuid())
+  store          Store    @relation(fields: [storeId], references: [id])
+  storeId        String
+
+  title          String
+  sku            String?
+  shopPlatformId String?  // Shopify product ID
+  supplier       Supplier? @relation(fields: [supplierId], references: [id])
+  supplierId     String?
+
+  lastScannedAt  DateTime?
+  lastTrustScore Float?
+  riskLabel      RiskLabel?
+
+  autoMonitor    Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Scan {
+  id              String    @id @default(cuid())
+  user            User      @relation(fields: [userId], references: [id])
+  userId          String
+
+  supplier        Supplier? @relation(fields: [supplierId], references: [id])
+  supplierId      String?
+
+  url             String
+  platform        SupplierPlatform?
+  type            String    // "SUPPLIER" | "PRODUCT"
+  requestedAt     DateTime  @default(now())
+  completedAt     DateTime?
+
+  // Output snapshot
+  overallTrustScore Float?
+  shippingScore     Float?
+  qualityScore      Float?
+  communicationScore Float?
+  stabilityScore    Float?
+  riskLabel         RiskLabel?
+
+  summary          String?  // text summary
+  issues           String?  // JSON string listing alerts
+}
+
+model SubscriptionPlan {
+  id         String    @id @default(cuid())
+  name       PlanName  @unique
+  displayName String
+  priceMonthly Int     // in cents
+  maxScansPerMonth Int?
+  maxStores  Int?
+  maxUsers   Int?
+  createdAt  DateTime  @default(now())
+}
+
+model Subscription {
+  id          String    @id @default(cuid())
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+
+  plan        SubscriptionPlan @relation(fields: [planId], references: [id])
+  planId      String
+
+  status      String    // ACTIVE, CANCELED, PAST_DUE, TRIAL
+  currentPeriodStart DateTime
+  currentPeriodEnd   DateTime
+  stripeCustomerId   String?
+  stripeSubscriptionId String?
+  shopifyBillingId   String?
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Notification {
+  id          String   @id @default(cuid())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+
+  title       String
+  body        String
+  type        String   // "SUPPLIER_SCORE_DROP", etc.
+  data        Json?
+  isRead      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+model AiToolUsage {
+  id          String   @id @default(cuid())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+
+  toolName    String   // "PRODUCT_FINDER", etc.
+  input       Json
+  output      Json?
+  createdAt   DateTime @default(now())
+}
+
+model ShopifyShop {
+  id            String  @id @default(cuid())
+  user          User    @relation(fields: [userId], references: [id])
+  userId        String
+
+  shopDomain    String  @unique
+  accessToken   String  // encrypted at rest ideally
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
