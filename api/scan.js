@@ -1,6 +1,6 @@
 // api/scan.js
 // Simple Supplier Trust Scan endpoint with NO database dependency.
-// This will run as a Serverless Function on Vercel at /api/scan
+// Runs as a Serverless Function on Vercel at /api/scan
 
 export default function handler(req, res) {
   if (req.method !== "POST") {
@@ -52,7 +52,6 @@ function detectPlatform(url) {
 
 // ---------- Mock metrics generator (placeholder for real data later) ----------
 function generateMockMetrics(platform) {
-  // Slightly different defaults per platform, just so it feels “smart”
   let baseShipping = 16;
   if (platform === "ALIEXPRESS") baseShipping = 12;
   if (platform === "ALIBABA") baseShipping = 18;
@@ -60,24 +59,23 @@ function generateMockMetrics(platform) {
 
   return {
     avgShippingDaysUS: baseShipping,
-    onTimeDeliveryRate: 0.88,        // 88% on time
-    refundRate: 0.04,                // 4% refunds
-    disputeRate: 0.02,               // 2% disputes
-    defectRate: 0.03,                // 3% defective
-    reviewAuthenticityScore: 0.75,   // 75% likely real reviews
+    onTimeDeliveryRate: 0.88,
+    refundRate: 0.04,
+    disputeRate: 0.02,
+    defectRate: 0.03,
+    reviewAuthenticityScore: 0.75,
     responseTimeHours: 8,
     outOfStockFrequency: 0.07,
     priceVolatilityScore: 0.25,
-    trendScore: 0.1,                 // slightly improving
+    trendScore: 0.1,
     orderVolume: 1200
   };
 }
 
-// ---------- Trust Score Engine (no Prisma needed) ----------
+// ---------- Trust Score Engine ----------
 function computeTrustScore(metrics) {
   const warnings = [];
 
-  // Utility helpers
   const clamp = (v, min = 0, max = 100) => Math.max(min, Math.min(max, v));
   const inverseRatioScore = (r) => (r == null ? null : clamp(100 - r * 100));
   const directRatioScore = (r) => (r == null ? null : clamp(r * 100));
@@ -86,7 +84,7 @@ function computeTrustScore(metrics) {
   let shippingScore = 70;
   if (metrics.avgShippingDaysUS != null) {
     const d = metrics.avgShippingDaysUS;
-    const normalized = clamp(120 - d * 4, 40, 100); // 5d ≈ 100, 25d ≈ 40
+    const normalized = clamp(120 - d * 4, 40, 100);
     shippingScore = normalized;
     if (d > 20) warnings.push("Long average shipping time to US.");
   }
@@ -126,7 +124,7 @@ function computeTrustScore(metrics) {
   let communicationScore = 80;
   if (metrics.responseTimeHours != null) {
     const h = metrics.responseTimeHours;
-    const normalized = clamp(120 - h * 2.5, 40, 100); // <2h great, >24h weak
+    const normalized = clamp(120 - h * 2.5, 40, 100);
     communicationScore = normalized;
     if (h > 24) warnings.push("Slow response time to messages.");
   }
@@ -242,4 +240,4 @@ function buildMockAlternatives(platform) {
       note: "Good performance with slightly slower shipping."
     }
   ];
-}
+      }
