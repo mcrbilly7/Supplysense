@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="app-body">
-  <!-- Top Nav -->
+  <!-- Top Navigation -->
   <header class="top-nav">
     <div class="nav-left">
       <a href="index.html" class="logo-mark">SupplySense<span>AI</span></a>
@@ -22,46 +22,44 @@
     </div>
   </header>
 
-  <!-- Side Nav / Drawer (if you already have one in CSS, this will match it) -->
+  <!-- Side Nav -->
   <aside class="side-nav">
-    <button class="side-nav-toggle" id="side-nav-toggle">
-      ☰
-    </button>
+    <button class="side-nav-toggle" id="side-nav-toggle">☰</button>
     <nav class="side-nav-menu" id="side-nav-menu">
       <a href="dashboard.html" class="side-nav-item">Overview</a>
       <a href="scanner.html" class="side-nav-item side-nav-item-active">Scan Links</a>
-      <a href="marketplace.html" class="side-nav-item">Top Suppliers</a>
+      <a href="marketplace.html" class="side-nav-item">Product Search</a>
       <a href="ai-tools.html" class="side-nav-item">AI Tools Suite</a>
-      <a href="#" class="side-nav-item">Account & Billing</a>
+      <a href="#" class="side-nav-item">Account &amp; Billing</a>
     </nav>
   </aside>
 
-  <!-- Main Content -->
   <main class="app-main">
     <section class="page-hero">
       <h1>Scan any supplier or product URL</h1>
       <p>
-        Paste a link from AliExpress, CJ Dropshipping, 1688, Alibaba, Taobao, or any
-        other platform and get an instant Trust Score with risk flags and alternatives.
+        Paste a link from AliExpress, CJ Dropshipping, 1688, Alibaba, Taobao or other
+        platforms to get a Trust Score, risk breakdown and alternative suppliers.
       </p>
     </section>
 
-    <!-- Scan Input Card -->
+    <!-- Scan card -->
     <section class="card scan-card">
       <h2>Supplier / Product URL</h2>
       <p class="card-subtext">
-        We’ll analyze the supplier’s performance and generate a 0–100 Trust Score.
+        We’ll analyze performance and return a 0–100 Trust Score with key warnings.
       </p>
 
       <div class="scan-input-row">
         <input
           id="scan-url-input"
           type="url"
-          placeholder="https://www.aliexpress.com/item/1234567890.html"
           class="scan-input"
+          placeholder="https://www.aliexpress.com/item/1234567890.html"
+          required
         />
         <button id="scan-submit" class="primary-btn">
-          Run Scan
+          Run scan
         </button>
       </div>
 
@@ -69,9 +67,9 @@
       <p id="scan-status" class="scan-status" style="display:none;"></p>
     </section>
 
-    <!-- Results -->
-    <section id="scan-results-container" class="scan-results-container" style="display:none;">
-      <div class="card scan-results-card">
+    <!-- Results section -->
+    <section id="scan-results-container" style="display:none; margin-top: 1.5rem;">
+      <div class="card" style="padding: 1.25rem;">
         <div class="results-header">
           <div>
             <h2>Trust Score</h2>
@@ -109,15 +107,16 @@
         </div>
 
         <div class="results-warnings-block">
-          <h3>Key Warnings</h3>
+          <h3>Warnings</h3>
           <ul id="scan-warnings-list" class="warnings-list"></ul>
         </div>
       </div>
 
-      <!-- Alternatives -->
       <div class="card scan-alternatives-card">
-        <h2>Suggested Alternative Suppliers</h2>
-        <p class="card-subtext">These are generic placeholders for now. Later they’ll be powered by real data.</p>
+        <h2>Alternative suppliers</h2>
+        <p class="card-subtext">
+          These are placeholder suggestions for now. Later they’ll be driven by real supplier data.
+        </p>
         <div id="scan-alternatives-list" class="alternatives-grid"></div>
       </div>
     </section>
