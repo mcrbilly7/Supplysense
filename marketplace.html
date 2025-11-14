@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SupplySense – Marketplace</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="script.js"></script>
+</head>
+<body data-page="marketplace" class="app-body">
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-mark"></span>
+      <span class="logo-text">SupplySense</span>
+      <span class="sidebar-tag">Platform</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="sidebar-link">Dashboard</a>
+      <a href="scanner.html" class="sidebar-link">Scanner</a>
+      <a href="marketplace.html" class="sidebar-link active">Marketplace</a>
+      <a href="ai-tools.html" class="sidebar-link">AI Tools</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-pill">
+        <div class="avatar">JD</div>
+        <div>
+          <div class="user-name">John Doe</div>
+          <div class="user-plan">Pro Plan</div>
+        </div>
+      </div>
+      <a href="index.html" class="sidebar-exit">← Back to Site</a>
+    </div>
+  </aside>
+
+  <main class="app-main">
+    <header class="app-header">
+      <div>
+        <h1>Supplier Marketplace</h1>
+        <p class="muted">
+          Browse our curated marketplace of verified suppliers across all major categories.
+        </p>
+      </div>
+    </header>
+
+    <section class="app-section">
+      <div class="marketplace-toolbar card">
+        <div class="toolbar-top">
+          <div class="input-group">
+            <span class="input-icon">🔍</span>
+            <input type="text" placeholder="Search suppliers" />
+          </div>
+          <select class="select">
+            <option>All Categories</option>
+            <option>Electronics</option>
+            <option>Apparel &amp; Textiles</option>
+            <option>Home &amp; Garden</option>
+            <option>Beauty &amp; Personal Care</option>
+          </select>
+          <button class="btn btn-soft">Filters</button>
+        </div>
+        <div class="toolbar-chips">
+          <span class="chip chip-soft">Verified Only</span>
+          <span class="chip chip-soft">Trust Score 80+</span>
+          <span class="chip chip-soft">Fast Shipping</span>
+        </div>
+      </div>
+
+      <div class="supplier-grid">
+        <div class="card supplier-card">
+          <div class="supplier-thumb"></div>
+          <h3>TechGear Manufacturing Co.</h3>
+          <p class="muted">Electronics &amp; Accessories</p>
+          <p class="muted">Shenzhen, China · 3–7 days</p>
+          <button class="btn btn-soft block">View Details</button>
+        </div>
+        <div class="card supplier-card">
+          <div class="supplier-thumb"></div>
+          <h3>Global Fashion Hub</h3>
+          <p class="muted">Apparel &amp; Textiles</p>
+          <p class="muted">Guangzhou, China · 5–10 days</p>
+          <button class="btn btn-soft block">View Details</button>
+        </div>
+        <div class="card supplier-card">
+          <div class="supplier-thumb"></div>
+          <h3>HomeStyle Essentials</h3>
+          <p class="muted">Home &amp; Garden</p>
+          <p class="muted">Yiwu, China · 7–14 days</p>
+          <button class="btn btn-soft block">View Details</button>
+        </div>
+        <div class="card supplier-card">
+          <div class="supplier-thumb"></div>
+          <h3>Premium Beauty Supplies</h3>
+          <p class="muted">Beauty &amp; Personal Care</p>
+          <p class="muted">Shanghai, China · 4–8 days</p>
+          <button class="btn btn-soft block">View Details</button>
+        </div>
+        <div class="card supplier-card">
+          <div class="supplier-thumb"></div>
+          <h3>Sports &amp; Outdoor Gear</h3>
+          <p class="muted">Sports &amp; Outdoors</p>
+          <p class="muted">Ningbo, China · 6–12 days</p>
+          <button class="btn btn-soft block">View Details</button>
+        </div>
+        <div class="card supplier-card">
+          <div class="supplier-thumb"></div>
+          <h3>Kids &amp; Baby Products Co.</h3>
+          <p class="muted">Baby &amp; Kids</p>
+          <p class="muted">Hangzhou, China · 5–9 days</p>
+          <button class="btn btn-soft block">View Details</button>
+        </div>
+        <div class="card supplier-card">
+          <div class="supplier-thumb"></div>
+          <h3>Auto Parts Direct</h3>
+          <p class="muted">Automotive</p>
+          <p class="muted">Wenzhou, China · 8–15 days</p>
+          <button class="btn btn-soft block">View Details</button>
+        </div>
+        <div class="card supplier-card">
+          <div class="supplier-thumb"></div>
+          <h3>Pet Supplies Pro</h3>
+          <p class="muted">Pet Supplies</p>
+          <p class="muted">Shenzhen, China · 5–10 days</p>
+          <button class="btn btn-soft block">View Details</button>
+        </div>
+        <div class="card supplier-card">
+          <div class="supplier-thumb"></div>
+          <h3>Office &amp; School Depot</h3>
+          <p class="muted">Office &amp; School</p>
+          <p class="muted">Guangzhou, China · 6–11 days</p>
+          <button class="btn btn-soft block">View Details</button>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>
