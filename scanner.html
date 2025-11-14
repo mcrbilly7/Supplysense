@@ -2,62 +2,127 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>SupplySense – Scanner</title>
+  <title>SupplySense AI – Supplier Scanner</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="styles.css" />
-  <script defer src="script.js"></script>
 </head>
-<body data-page="scanner" class="app-body">
-<div class="app-shell">
-  <aside class="sidebar">
-    <div class="sidebar-logo">
-      <span class="logo-mark"></span>
-      <span class="logo-text">SupplySense</span>
-      <span class="sidebar-tag">Platform</span>
+<body class="app-body">
+  <!-- Top Nav -->
+  <header class="top-nav">
+    <div class="nav-left">
+      <a href="index.html" class="logo-mark">SupplySense<span>AI</span></a>
+      <span class="nav-divider"></span>
+      <span class="nav-label">Supplier Scanner</span>
     </div>
-    <nav class="sidebar-nav">
-      <a href="dashboard.html" class="sidebar-link">Dashboard</a>
-      <a href="scanner.html" class="sidebar-link active">Scanner</a>
-      <a href="marketplace.html" class="sidebar-link">Marketplace</a>
-      <a href="ai-tools.html" class="sidebar-link">AI Tools</a>
+    <div class="nav-right">
+      <a href="dashboard.html" class="nav-link">Dashboard</a>
+      <a href="scanner.html" class="nav-link nav-link-active">Scanner</a>
+      <a href="marketplace.html" class="nav-link">Marketplace</a>
+      <a href="ai-tools.html" class="nav-link">AI Tools</a>
+    </div>
+  </header>
+
+  <!-- Side Nav / Drawer (if you already have one in CSS, this will match it) -->
+  <aside class="side-nav">
+    <button class="side-nav-toggle" id="side-nav-toggle">
+      ☰
+    </button>
+    <nav class="side-nav-menu" id="side-nav-menu">
+      <a href="dashboard.html" class="side-nav-item">Overview</a>
+      <a href="scanner.html" class="side-nav-item side-nav-item-active">Scan Links</a>
+      <a href="marketplace.html" class="side-nav-item">Top Suppliers</a>
+      <a href="ai-tools.html" class="side-nav-item">AI Tools Suite</a>
+      <a href="#" class="side-nav-item">Account & Billing</a>
     </nav>
-    <div class="sidebar-footer">
-      <div class="user-pill">
-        <div class="avatar">JD</div>
-        <div>
-          <div class="user-name">John Doe</div>
-          <div class="user-plan">Pro Plan</div>
-        </div>
-      </div>
-      <a href="index.html" class="sidebar-exit">← Back to Site</a>
-    </div>
   </aside>
 
+  <!-- Main Content -->
   <main class="app-main">
-    <header class="app-header">
-      <div>
-        <h1>Product Scanner</h1>
-        <p class="muted">
-          Paste any supplier URL to get instant trust score analysis and comprehensive insights.
-        </p>
-      </div>
-    </header>
+    <section class="page-hero">
+      <h1>Scan any supplier or product URL</h1>
+      <p>
+        Paste a link from AliExpress, CJ Dropshipping, 1688, Alibaba, Taobao, or any
+        other platform and get an instant Trust Score with risk flags and alternatives.
+      </p>
+    </section>
 
-    <section class="app-section">
-      <div class="card scanner-card">
-        <div class="scanner-input-row">
-          <div class="input-group input-lg">
-            <span class="input-icon">🔍</span>
-            <input type="text" placeholder="Paste supplier URL (AliExpress, Alibaba, 1688, CJ Dropshipping…)" />
+    <!-- Scan Input Card -->
+    <section class="card scan-card">
+      <h2>Supplier / Product URL</h2>
+      <p class="card-subtext">
+        We’ll analyze the supplier’s performance and generate a 0–100 Trust Score.
+      </p>
+
+      <div class="scan-input-row">
+        <input
+          id="scan-url-input"
+          type="url"
+          placeholder="https://www.aliexpress.com/item/1234567890.html"
+          class="scan-input"
+        />
+        <button id="scan-submit" class="primary-btn">
+          Run Scan
+        </button>
+      </div>
+
+      <p id="scan-error" class="scan-error" style="display:none;"></p>
+      <p id="scan-status" class="scan-status" style="display:none;"></p>
+    </section>
+
+    <!-- Results -->
+    <section id="scan-results-container" class="scan-results-container" style="display:none;">
+      <div class="card scan-results-card">
+        <div class="results-header">
+          <div>
+            <h2>Trust Score</h2>
+            <p id="scan-results-url" class="results-url"></p>
+            <p id="scan-results-platform" class="results-platform"></p>
           </div>
-          <button class="btn btn-primary btn-lg">Scan Supplier</button>
+          <div class="score-badge-wrapper">
+            <div id="scan-results-score" class="score-badge">--</div>
+            <div id="scan-results-label" class="score-label">–</div>
+          </div>
         </div>
-        <p class="scanner-supported">
-          Supports: AliExpress, Alibaba, 1688.com, Taobao, CJ Dropshipping
-        </p>
+
+        <div class="results-grid">
+          <div class="results-metric">
+            <span class="metric-label">Shipping</span>
+            <span id="scan-metric-shipping" class="metric-value">--</span>
+          </div>
+          <div class="results-metric">
+            <span class="metric-label">Quality</span>
+            <span id="scan-metric-quality" class="metric-value">--</span>
+          </div>
+          <div class="results-metric">
+            <span class="metric-label">Communication</span>
+            <span id="scan-metric-communication" class="metric-value">--</span>
+          </div>
+          <div class="results-metric">
+            <span class="metric-label">Stability</span>
+            <span id="scan-metric-stability" class="metric-value">--</span>
+          </div>
+        </div>
+
+        <div class="results-summary-block">
+          <h3>Summary</h3>
+          <p id="scan-summary-text" class="results-summary-text"></p>
+        </div>
+
+        <div class="results-warnings-block">
+          <h3>Key Warnings</h3>
+          <ul id="scan-warnings-list" class="warnings-list"></ul>
+        </div>
+      </div>
+
+      <!-- Alternatives -->
+      <div class="card scan-alternatives-card">
+        <h2>Suggested Alternative Suppliers</h2>
+        <p class="card-subtext">These are generic placeholders for now. Later they’ll be powered by real data.</p>
+        <div id="scan-alternatives-list" class="alternatives-grid"></div>
       </div>
     </section>
   </main>
-</div>
+
+  <script src="script.js"></script>
 </body>
 </html>
