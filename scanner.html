@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SupplySense – Scanner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="script.js"></script>
+</head>
+<body data-page="scanner" class="app-body">
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-mark"></span>
+      <span class="logo-text">SupplySense</span>
+      <span class="sidebar-tag">Platform</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="sidebar-link">Dashboard</a>
+      <a href="scanner.html" class="sidebar-link active">Scanner</a>
+      <a href="marketplace.html" class="sidebar-link">Marketplace</a>
+      <a href="ai-tools.html" class="sidebar-link">AI Tools</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-pill">
+        <div class="avatar">JD</div>
+        <div>
+          <div class="user-name">John Doe</div>
+          <div class="user-plan">Pro Plan</div>
+        </div>
+      </div>
+      <a href="index.html" class="sidebar-exit">← Back to Site</a>
+    </div>
+  </aside>
+
+  <main class="app-main">
+    <header class="app-header">
+      <div>
+        <h1>Product Scanner</h1>
+        <p class="muted">
+          Paste any supplier URL to get instant trust score analysis and comprehensive insights.
+        </p>
+      </div>
+    </header>
+
+    <section class="app-section">
+      <div class="card scanner-card">
+        <div class="scanner-input-row">
+          <div class="input-group input-lg">
+            <span class="input-icon">🔍</span>
+            <input type="text" placeholder="Paste supplier URL (AliExpress, Alibaba, 1688, CJ Dropshipping…)" />
+          </div>
+          <button class="btn btn-primary btn-lg">Scan Supplier</button>
+        </div>
+        <p class="scanner-supported">
+          Supports: AliExpress, Alibaba, 1688.com, Taobao, CJ Dropshipping
+        </p>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>
