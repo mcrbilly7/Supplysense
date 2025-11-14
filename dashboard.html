@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SupplySense – Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="script.js"></script>
+</head>
+<body data-page="dashboard" class="app-body">
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-mark"></span>
+      <span class="logo-text">SupplySense</span>
+      <span class="sidebar-tag">Platform</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="sidebar-link active">Dashboard</a>
+      <a href="scanner.html" class="sidebar-link">Scanner</a>
+      <a href="marketplace.html" class="sidebar-link">Marketplace</a>
+      <a href="ai-tools.html" class="sidebar-link">AI Tools</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-pill">
+        <div class="avatar">JD</div>
+        <div>
+          <div class="user-name">John Doe</div>
+          <div class="user-plan">Pro Plan</div>
+        </div>
+      </div>
+      <a href="index.html" class="sidebar-exit">← Back to Site</a>
+    </div>
+  </aside>
+
+  <main class="app-main">
+    <header class="app-header">
+      <div>
+        <h1>Dashboard</h1>
+        <p class="muted">Welcome back! Here’s your supplier verification overview.</p>
+      </div>
+      <button class="icon-button" title="Refresh">
+        ⟳
+      </button>
+    </header>
+
+    <section class="app-section">
+      <div class="stats-grid">
+        <div class="card stat-card">
+          <div class="stat-label">Suppliers Scanned</div>
+          <div class="stat-main">
+            <span class="stat-value">127</span>
+            <span class="stat-tag stat-tag-up">+12% from last month</span>
+          </div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-label">Products Verified</div>
+          <div class="stat-main">
+            <span class="stat-value">456</span>
+            <span class="stat-tag stat-tag-up">+8% from last month</span>
+          </div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-label">Avg Trust Score</div>
+          <div class="stat-main">
+            <span class="stat-value">82</span>
+            <span class="stat-tag">Across all suppliers</span>
+          </div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-label">Saved Suppliers</div>
+          <div class="stat-main">
+            <span class="stat-value">24</span>
+            <span class="stat-tag">Verified &amp; saved</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="app-section two-column">
+      <div class="card">
+        <div class="card-header">
+          <h2>Recent Scans</h2>
+          <a href="#" class="link-muted">View All Scans</a>
+        </div>
+        <div class="list">
+          <div class="list-item">
+            <div>
+              <div class="list-title">
+                TechSource Global Ltd
+                <span class="chip chip-success">verified</span>
+              </div>
+              <div class="list-subtitle">aliexpress.com/store/… · 2 hours ago</div>
+            </div>
+            <div class="list-meta">
+              <span class="badge-soft">89</span>
+              <button class="btn btn-soft btn-xs">View</button>
+            </div>
+          </div>
+          <div class="list-item">
+            <div>
+              <div class="list-title">
+                FastShip Electronics
+                <span class="chip chip-warning">caution</span>
+              </div>
+              <div class="list-subtitle">1688.com/supplier/… · 5 hours ago</div>
+            </div>
+            <div class="list-meta">
+              <span class="badge-soft">72</span>
+              <button class="btn btn-soft btn-xs">View</button>
+            </div>
+          </div>
+          <div class="list-item">
+            <div>
+              <div class="list-title">
+                Quality Home Goods
+                <span class="chip chip-danger">risky</span>
+              </div>
+              <div class="list-subtitle">alibaba.com/supplier/… · 1 day ago</div>
+            </div>
+            <div class="list-meta">
+              <span class="badge-soft">45</span>
+              <button class="btn btn-soft btn-xs">View</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2>Average Score</h2>
+          <span class="chip chip-success">Excellent</span>
+        </div>
+        <div class="score-ring-large">
+          <div class="score-ring">
+            <span>82</span>
+            <small>/100</small>
+          </div>
+        </div>
+        <div class="score-footer">
+          <div>
+            <div class="muted">This Month</div>
+            <div class="score-footer-value">82 <span class="stat-tag-up">↑</span></div>
+          </div>
+          <div>
+            <div class="muted">Last Month</div>
+            <div class="score-footer-value">78</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="app-section">
+      <div class="card">
+        <div class="card-header">
+          <h2>Alerts</h2>
+        </div>
+        <div class="alert alert-danger">
+          <strong>Price Change Detected</strong>
+          <p>FastShip Electronics increased prices by 15%.</p>
+        </div>
+        <div class="alert alert-warning">
+          <strong>Stock Alert</strong>
+          <p>2 saved products are low on inventory.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>
