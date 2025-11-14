@@ -2,137 +2,119 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>SupplySense – Marketplace</title>
+  <title>SupplySense AI – Product Search & Suppliers</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="styles.css" />
-  <script defer src="script.js"></script>
 </head>
-<body data-page="marketplace" class="app-body">
-<div class="app-shell">
-  <aside class="sidebar">
-    <div class="sidebar-logo">
-      <span class="logo-mark"></span>
-      <span class="logo-text">SupplySense</span>
-      <span class="sidebar-tag">Platform</span>
+<body class="app-body">
+  <!-- Top Navigation -->
+  <header class="top-nav">
+    <div class="nav-left">
+      <a href="index.html" class="logo-mark">SupplySense<span>AI</span></a>
+      <span class="nav-divider"></span>
+      <span class="nav-label">Product Search</span>
     </div>
-    <nav class="sidebar-nav">
-      <a href="dashboard.html" class="sidebar-link">Dashboard</a>
-      <a href="scanner.html" class="sidebar-link">Scanner</a>
-      <a href="marketplace.html" class="sidebar-link active">Marketplace</a>
-      <a href="ai-tools.html" class="sidebar-link">AI Tools</a>
+    <div class="nav-right">
+      <a href="dashboard.html" class="nav-link">Dashboard</a>
+      <a href="scanner.html" class="nav-link">Scanner</a>
+      <a href="marketplace.html" class="nav-link nav-link-active">Marketplace</a>
+      <a href="ai-tools.html" class="nav-link">AI Tools</a>
+    </div>
+  </header>
+
+  <!-- Side Nav -->
+  <aside class="side-nav">
+    <button class="side-nav-toggle" id="side-nav-toggle">☰</button>
+    <nav class="side-nav-menu" id="side-nav-menu">
+      <a href="dashboard.html" class="side-nav-item">Overview</a>
+      <a href="scanner.html" class="side-nav-item">Scan Links</a>
+      <a href="marketplace.html" class="side-nav-item side-nav-item-active">Product Search</a>
+      <a href="ai-tools.html" class="side-nav-item">AI Tools Suite</a>
+      <a href="#" class="side-nav-item">Account &amp; Billing</a>
     </nav>
-    <div class="sidebar-footer">
-      <div class="user-pill">
-        <div class="avatar">JD</div>
-        <div>
-          <div class="user-name">John Doe</div>
-          <div class="user-plan">Pro Plan</div>
-        </div>
-      </div>
-      <a href="index.html" class="sidebar-exit">← Back to Site</a>
-    </div>
   </aside>
 
   <main class="app-main">
-    <header class="app-header">
-      <div>
-        <h1>Supplier Marketplace</h1>
-        <p class="muted">
-          Browse our curated marketplace of verified suppliers across all major categories.
-        </p>
-      </div>
-    </header>
+    <section class="page-hero">
+      <h1>Search products and discover vetted suppliers</h1>
+      <p>
+        Type a product keyword, then filter suppliers by shipping time, price range,
+        rating and region. All results include a Trust Score so you know who to work with.
+      </p>
+    </section>
 
-    <section class="app-section">
-      <div class="marketplace-toolbar card">
-        <div class="toolbar-top">
-          <div class="input-group">
-            <span class="input-icon">🔍</span>
-            <input type="text" placeholder="Search suppliers" />
-          </div>
-          <select class="select">
-            <option>All Categories</option>
-            <option>Electronics</option>
-            <option>Apparel &amp; Textiles</option>
-            <option>Home &amp; Garden</option>
-            <option>Beauty &amp; Personal Care</option>
+    <!-- Search & Filters -->
+    <section class="card marketplace-card">
+      <div class="marketplace-search-row">
+        <input
+          type="text"
+          id="product-search-input"
+          class="search-input"
+          placeholder="Search for products (e.g. LED dog collar, posture corrector)…"
+        />
+        <button id="product-search-btn" class="primary-btn">Search</button>
+      </div>
+
+      <div class="marketplace-filters">
+        <div class="filter-group">
+          <label for="filter-shipping">Max shipping days</label>
+          <select id="filter-shipping">
+            <option value="">Any</option>
+            <option value="7">≤ 7 days</option>
+            <option value="14">≤ 14 days</option>
+            <option value="21">≤ 21 days</option>
           </select>
-          <button class="btn btn-soft">Filters</button>
         </div>
-        <div class="toolbar-chips">
-          <span class="chip chip-soft">Verified Only</span>
-          <span class="chip chip-soft">Trust Score 80+</span>
-          <span class="chip chip-soft">Fast Shipping</span>
-        </div>
-      </div>
 
-      <div class="supplier-grid">
-        <div class="card supplier-card">
-          <div class="supplier-thumb"></div>
-          <h3>TechGear Manufacturing Co.</h3>
-          <p class="muted">Electronics &amp; Accessories</p>
-          <p class="muted">Shenzhen, China · 3–7 days</p>
-          <button class="btn btn-soft block">View Details</button>
+        <div class="filter-group">
+          <label for="filter-price">Price range</label>
+          <select id="filter-price">
+            <option value="">Any</option>
+            <option value="low">Low (&lt; $10)</option>
+            <option value="mid">$10 – $30</option>
+            <option value="high">&gt; $30</option>
+          </select>
         </div>
-        <div class="card supplier-card">
-          <div class="supplier-thumb"></div>
-          <h3>Global Fashion Hub</h3>
-          <p class="muted">Apparel &amp; Textiles</p>
-          <p class="muted">Guangzhou, China · 5–10 days</p>
-          <button class="btn btn-soft block">View Details</button>
+
+        <div class="filter-group">
+          <label for="filter-rating">Min rating</label>
+          <select id="filter-rating">
+            <option value="">Any</option>
+            <option value="3.5">3.5+</option>
+            <option value="4">4.0+</option>
+            <option value="4.5">4.5+</option>
+          </select>
         </div>
-        <div class="card supplier-card">
-          <div class="supplier-thumb"></div>
-          <h3>HomeStyle Essentials</h3>
-          <p class="muted">Home &amp; Garden</p>
-          <p class="muted">Yiwu, China · 7–14 days</p>
-          <button class="btn btn-soft block">View Details</button>
-        </div>
-        <div class="card supplier-card">
-          <div class="supplier-thumb"></div>
-          <h3>Premium Beauty Supplies</h3>
-          <p class="muted">Beauty &amp; Personal Care</p>
-          <p class="muted">Shanghai, China · 4–8 days</p>
-          <button class="btn btn-soft block">View Details</button>
-        </div>
-        <div class="card supplier-card">
-          <div class="supplier-thumb"></div>
-          <h3>Sports &amp; Outdoor Gear</h3>
-          <p class="muted">Sports &amp; Outdoors</p>
-          <p class="muted">Ningbo, China · 6–12 days</p>
-          <button class="btn btn-soft block">View Details</button>
-        </div>
-        <div class="card supplier-card">
-          <div class="supplier-thumb"></div>
-          <h3>Kids &amp; Baby Products Co.</h3>
-          <p class="muted">Baby &amp; Kids</p>
-          <p class="muted">Hangzhou, China · 5–9 days</p>
-          <button class="btn btn-soft block">View Details</button>
-        </div>
-        <div class="card supplier-card">
-          <div class="supplier-thumb"></div>
-          <h3>Auto Parts Direct</h3>
-          <p class="muted">Automotive</p>
-          <p class="muted">Wenzhou, China · 8–15 days</p>
-          <button class="btn btn-soft block">View Details</button>
-        </div>
-        <div class="card supplier-card">
-          <div class="supplier-thumb"></div>
-          <h3>Pet Supplies Pro</h3>
-          <p class="muted">Pet Supplies</p>
-          <p class="muted">Shenzhen, China · 5–10 days</p>
-          <button class="btn btn-soft block">View Details</button>
-        </div>
-        <div class="card supplier-card">
-          <div class="supplier-thumb"></div>
-          <h3>Office &amp; School Depot</h3>
-          <p class="muted">Office &amp; School</p>
-          <p class="muted">Guangzhou, China · 6–11 days</p>
-          <button class="btn btn-soft block">View Details</button>
+
+        <div class="filter-group">
+          <label for="filter-region">Ships to</label>
+          <select id="filter-region">
+            <option value="">Any</option>
+            <option value="US">US</option>
+            <option value="EU">EU</option>
+            <option value="UK">UK</option>
+          </select>
         </div>
       </div>
     </section>
+
+    <!-- Supplier Results -->
+    <section class="card marketplace-card">
+      <div class="marketplace-results-header">
+        <h2>Recommended suppliers</h2>
+        <p class="card-subtext">
+          This list is mock data for now. Later, it will be populated from real supplier sources and your scans.
+        </p>
+      </div>
+
+      <div id="supplier-results-empty" class="empty-state">
+        Start by searching for a product keyword, or browse the suggested suppliers below.
+      </div>
+
+      <div id="supplier-results" class="supplier-grid"></div>
+    </section>
   </main>
-</div>
+
+  <script src="script.js"></script>
 </body>
 </html>
